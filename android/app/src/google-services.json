@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "761913255393",
+    "project_id": "hardik-firebase-auth",
+    "storage_bucket": "hardik-firebase-auth.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:761913255393:android:832fe5d35a919c9f919ea0",
+        "android_client_info": {
+          "package_name": "com.example.hardik_flutter_auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "761913255393-hui6te6dtneqqmkjmkq4tjtoir7eaujj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBhKjhYSg0fYkua2sHH1OuTYOHmTkl__lA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "761913255393-hui6te6dtneqqmkjmkq4tjtoir7eaujj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
