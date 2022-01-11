@@ -6,6 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'home_page.dart';
 
 class ForgotPassword extends StatefulWidget {
+  static const id = 'ForgotPassword';
   @override
   _ForgotPasswordState createState() => _ForgotPasswordState();
 }

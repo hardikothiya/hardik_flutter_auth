@@ -4,14 +4,19 @@ import 'package:hardik_flutter_auth/screens/signup_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'forgot_password.dart';
 import 'home_page.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class LoginPage extends StatefulWidget {
+class LoginScreen extends StatefulWidget {
+  static const id = 'LoginPage';
+
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> with InputValidationMixin {
+class _LoginScreenState extends State<LoginScreen> with InputValidationMixin {
   final formGlobalKey = GlobalKey<FormState>();
+
+  final storage = FlutterSecureStorage();
   FirebaseAuth auth = FirebaseAuth.instance;
   final textEditingController = TextEditingController();
   final passwordEditingController = TextEditingController();
@@ -117,14 +122,21 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                 onPressed: () async {
                   if (formGlobalKey.currentState!.validate()) {
                     try {
-                      await auth.signInWithEmailAndPassword(
-                          email: _email, password: _password);
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => HomePage(),
-                          ));
+                      UserCredential credentials =
+                          await auth.signInWithEmailAndPassword(
+                              email: _email, password: _password);
+                      await storage.write(
+                          key: 'userID',
+                          value: credentials.user?.uid.toString());
+
+                      await storage.write(
+                          key: 'email',
+                          value: credentials.user?.email.toString());
+                      print(credentials.user?.email);
+
+                      Navigator.pushNamed(context, HomeScreen.id);
                       textEditingController.clear();
+
                       passwordEditingController.clear();
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'user-not-found') {
@@ -135,18 +147,14 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
                     } catch (e) {
                       print(e);
                     }
-                    print("user name ${_email} and password $_password");
+                    // print("user name ${_email} and password $_password");
                   }
                 },
                 child: Text("Login"),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (_) => ForgotPassword(),
-                      ));
+                  Navigator.pushNamed(context, ForgotPassword.id);
                 },
                 child: const Text(
                   'Forgot Password ?',
@@ -175,12 +183,7 @@ class _LoginPageState extends State<LoginPage> with InputValidationMixin {
             color: Colors.blue,
           ),
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => SignUpScreen(),
-              ),
-            );
+            Navigator.pushNamed(context, SignUpScreen.id);
           }),
     );
   }

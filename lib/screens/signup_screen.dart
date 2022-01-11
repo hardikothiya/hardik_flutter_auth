@@ -1,11 +1,14 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import 'home_page.dart';
 
 class SignUpScreen extends StatefulWidget {
+  static const id = 'SignUpScreen';
+
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
@@ -13,6 +16,7 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
   final formGlobalKey = GlobalKey<FormState>();
   FirebaseAuth _auth = FirebaseAuth.instance;
+  final storage = FlutterSecureStorage();
 
   String _password = '';
   String _email = '';
@@ -159,10 +163,18 @@ class _SignUpScreenState extends State<SignUpScreen> with InputValidationMixin {
                 onPressed: () async {
                   if (formGlobalKey.currentState!.validate()) {
                     try {
-                      await _auth.createUserWithEmailAndPassword(
-                          email: _email, password: _confirmPassword);
-                      Navigator.pushReplacement(context,
-                          MaterialPageRoute(builder: (_) => HomePage()));
+                      UserCredential credential =
+                          await _auth.createUserWithEmailAndPassword(
+                              email: _email, password: _confirmPassword);
+                      // print(credential.user?.uid);
+
+                      await storage.write(
+                          key: 'userID', value: credential.user?.uid);
+                      await storage.write(
+                          key: 'email',
+                          value: credential.user?.email.toString());
+
+                      Navigator.pushNamed(context, HomeScreen.id);
                     } on FirebaseAuthException catch (e) {
                       if (e.code == 'email-already-in-use') {
                         Fluttertoast.showToast(
