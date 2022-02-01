@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hardik_flutter_auth/widgets/custom_drawer.dart';
 
 import 'login_screen.dart';
 
@@ -10,7 +11,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final storage = FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
   String username = '';
 
   @override
@@ -33,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       appBar: AppBar(
         actions: [
           IconButton(
