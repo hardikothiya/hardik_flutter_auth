@@ -4,6 +4,7 @@ import 'package:hardik_flutter_auth/screens/forgot_password.dart';
 import 'package:hardik_flutter_auth/screens/home_page.dart';
 import 'package:hardik_flutter_auth/screens/login_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:hardik_flutter_auth/screens/profile_screen.dart';
 import 'package:hardik_flutter_auth/screens/signup_screen.dart';
 
 void main() async {
@@ -48,6 +49,7 @@ class _MyAppState extends State<MyApp> {
         SignUpScreen.id: (context) => SignUpScreen(),
         ForgotPassword.id: (context) => ForgotPassword(),
         HomeScreen.id: (context) => HomeScreen(),
+        ProfileScreen.id: (context) => ProfileScreen(),
       },
       title: 'Login',
       theme: ThemeData(

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:hardik_flutter_auth/screens/profile_screen.dart';
 import 'package:hardik_flutter_auth/widgets/custom_drawer.dart';
 
 import 'login_screen.dart';
@@ -45,10 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               icon: const Icon(Icons.logout)),
           IconButton(
-              onPressed: () async {
-                print(await storage.read(key: 'email'));
+              onPressed: () {
+                Navigator.pushNamed(context, ProfileScreen.id);
               },
-              icon: const Icon(Icons.ac_unit))
+              icon: Icon(Icons.account_circle))
         ],
       ),
       body: Text('Hi $username'),
